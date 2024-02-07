@@ -1,32 +1,34 @@
 """my_controller controller."""
 
-# You may need to import some classes of the controller module. Ex:
-#  from controller import Robot, Motor, DistanceSensor
-from controller import Robot
+from controller import Robot, Camera, Gyro, Motor
+from time import sleep
 
-# create the Robot instance.
-robot = Robot()
 
-# get the time step of the current world.
+class BB_8_controller(Robot):
+    def __init__(self):
+        super().__init__()
+        self.camera: Camera = self.getDevice('camera')
+        self.counterweight_gyro: Gyro = self.getDevice('counterweight gyro')
+        self.body_pitch_motor: Motor = self.getDevice('body pitch motor')
+        self.body_yaw_motor: Motor = self.getDevice('body yaw motor')
+        self.head_yaw_motor: Motor = self.getDevice('head yaw motor')
+
+
+robot = BB_8_controller()
 timestep = int(robot.getBasicTimeStep())
 
-# You should insert a getDevice-like function in order to get the
-# instance of a device of the robot. Something like:
-#  motor = robot.getDevice('motorname')
-#  ds = robot.getDevice('dsname')
-#  ds.enable(timestep)
-
-# Main loop:
-# - perform simulation steps until Webots is stopping the controller
 while robot.step(timestep) != -1:
-    # Read the sensors:
-    # Enter here functions to read sensor data, like:
-    #  val = ds.getValue()
+    robot.camera.enable(p=timestep)
+    robot.counterweight_gyro.enable(p=timestep)
+    robot.body_pitch_motor.setVelocity(0)
+    robot.body_yaw_motor.setVelocity(0)
+    robot.head_yaw_motor.setVelocity(0)
 
-    # Process sensor data here.
+    if robot.camera.hasRecognition():
+        robot.camera.recognitionEnable(robot.camera.getSamplingPeriod())
+        print("Recognition ON")
 
-    # Enter here functions to send actuator commands, like:
-    #  motor.setPosition(10.0)
+    counterweight_x_vector, counterweight_y_vector, counterweight_z_vector = robot.counterweight_gyro.getValues()
+    print(f"angle X : {counterweight_x_vector} angle Y : {counterweight_y_vector} angle Z : {counterweight_z_vector}")
     pass
 
-# Enter here exit cleanup code.
