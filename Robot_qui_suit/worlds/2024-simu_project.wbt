@@ -1,0 +1,118 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Asphalt.proto"
+EXTERNPROTO "../protos/Road.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/obstacles/protos/Ramp30deg.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/saeon/protos/Altino.proto"
+
+WorldInfo {
+  basicTimeStep 10
+}
+Viewpoint {
+  orientation -0.0705079982698772 -0.5827625108721062 0.8095779629547813 5.9710237211611705
+  position -21.459127758284048 -13.893516580037067 1.5730293457728581
+}
+TexturedBackgroundLight {
+}
+TexturedBackground {
+  texture "twilight_cloudy_empty"
+  skyColor [
+    0 0 1
+  ]
+}
+RectangleArena {
+  translation 1.62531 0.849485 5.68434e-14
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 0
+}
+Floor {
+  translation -15 22 0.01
+  name "Relay1"
+  size 5 5
+  appearance Parquetry {
+    colorOverride 1 0 1
+  }
+}
+Floor {
+  translation -45 52 0.01
+  name "Relay2"
+  size 5 5
+  appearance Parquetry {
+    colorOverride 0 1 1
+  }
+}
+Ramp30deg {
+  translation -14.1511 19.1333 3.55271e-15
+  rotation 0 0 1 1.8326
+}
+RectangleArena {
+  translation -29.7867 36.7686 1.03739e-12
+  name "rectangle arena(1)"
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 0
+}
+RectangleArena {
+  translation -60.5709 69.2032 -1.85
+  name "rectangle arena(2)"
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 1
+}
+Road {
+  translation -16 -15.5 0.006
+  name "mainroad"
+  width 2
+  lines []
+  roadBorderHeight 0.5
+  roadBorderWidth [
+    0
+  ]
+  rightBarrier TRUE
+  leftBarrier TRUE
+  bottom TRUE
+  wayPoints [
+    0 0 0
+    10 0 0
+    10 15 0
+    10 20 0
+    17 20 0
+    17 0 0
+    23 0 0
+    28 0 0
+    35 30 0
+    10 30 0
+    2 30 0
+    2 35.5 0
+  ]
+  appearance Asphalt {
+    colorOverride 0 1 0
+  }
+}
+Altino {
+  hidden rotation_1 -1.1118193956325904e-05 0.9999981962663296 0.0018992999955258112 0.011707562829929394
+  hidden rotation_2 -4.846138058592732e-06 -0.9999999999743404 5.275831620546786e-06 4.797241184464057
+  hidden rotation_3 0 1 0 0.011707542238730754
+  hidden rotation_4 0 -1 0 4.797241207181404
+  translation -14.5687 -15.896 0.0886917
+  rotation -0.0009049262661088714 -0.8949634938580611 0.44613846031229515 0.000313060066441406
+  controller "SPEEEED"
+}
