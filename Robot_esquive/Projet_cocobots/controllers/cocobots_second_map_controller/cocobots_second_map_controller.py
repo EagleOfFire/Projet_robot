@@ -1,26 +1,6 @@
 from controller import Robot, Motor, GPS, DistanceSensor, Compass
 import math
 
-# target coordinates
-TARGET_X = -44.85
-TARGET_Y = 50.97
-TARGET_Z = 0.09
-
-
-def angle_between_vectors(a, b):
-    dot_product = sum(x * y for x, y in zip(a, b))
-    norm_a = math.sqrt(sum(x * x for x in a))
-    norm_b = math.sqrt(sum(x * x for x in b))
-    return math.acos(dot_product / (norm_a * norm_b))
-def calculate_opposite_angle(self, target_direction):
-    robot_direction = self.compass.getValues()
-    angle = math.atan2(-target_direction[1], -target_direction[0]) - math.atan2(robot_direction[1],
-                                                                                robot_direction[0])
-    return angle
-
-def map_range(x, in_min, in_max, out_min, out_max):
-    return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
-
 
 class MyRobot(Robot):
     # maximal speed allowed
