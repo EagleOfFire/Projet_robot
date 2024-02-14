@@ -1,4 +1,4 @@
-from controller import Robot, Motor, GPS, DistanceSensor, Gyro
+from controller import Robot, Motor, GPS, DistanceSensor, Compass
 import math
 
 # target coordinates
@@ -12,9 +12,15 @@ def angle_between_vectors(a, b):
     norm_a = math.sqrt(sum(x * x for x in a))
     norm_b = math.sqrt(sum(x * x for x in b))
     return math.acos(dot_product / (norm_a * norm_b))
+def calculate_opposite_angle(self, target_direction):
+    robot_direction = self.compass.getValues()
+    angle = math.atan2(-target_direction[1], -target_direction[0]) - math.atan2(robot_direction[1],
+                                                                                robot_direction[0])
+    return angle
 
 def map_range(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
+
 
 class MyRobot(Robot):
     # maximal speed allowed
@@ -40,28 +46,28 @@ class MyRobot(Robot):
         self.gps: GPS = self.getDevice('gps')
         self.gps.enable(self.timestep)
 
-        # Get handle for gyroscope
-        self.gyro: Gyro = self.getDevice('gyro')
-        self.gyro.enable(self.timestep)
-
         # Get handle distance sensor
+        self.distance_sensor_left_left_left: DistanceSensor = self.getDevice('so0')
         self.distance_sensor_left_left: DistanceSensor = self.getDevice('so1')
         self.distance_sensor_left: DistanceSensor = self.getDevice('so2')
         self.distance_sensor_center_left: DistanceSensor = self.getDevice('so3')
         self.distance_sensor_center_right: DistanceSensor = self.getDevice('so4')
         self.distance_sensor_right: DistanceSensor = self.getDevice('so5')
         self.distance_sensor_right_right: DistanceSensor = self.getDevice('so6')
-        self.distance_sensor_left_left.enable(self.timestep)
-        self.distance_sensor_left.enable(self.timestep)
-        self.distance_sensor_center_left.enable(self.timestep)
-        self.distance_sensor_center_right.enable(self.timestep)
-        self.distance_sensor_right.enable(self.timestep)
-        self.distance_sensor_right_right.enable(self.timestep)
+        self.distance_sensor_right_right_right: DistanceSensor = self.getDevice('so7')
 
-        self.all_distance_sensor_left = [self.distance_sensor_left_left,
+        self.all_distance_sensor_left = [self.distance_sensor_left_left_left, self.distance_sensor_left_left,
                                          self.distance_sensor_left, self.distance_sensor_center_left]
-        self.all_distance_sensor_right = [self.distance_sensor_right_right,
-                                         self.distance_sensor_right, self.distance_sensor_center_right]
+        self.all_distance_sensor_right = [self.distance_sensor_right_right_right, self.distance_sensor_right_right,
+                                          self.distance_sensor_right, self.distance_sensor_center_right]
+
+        self.compass: Compass = self.getDevice('compass')
+        self.compass.enable(self.timestep)
+
+        for sensor in self.all_distance_sensor_left:
+            sensor.enable(self.timestep)
+        for sensor in self.all_distance_sensor_right:
+            sensor.enable(self.timestep)
 
     def set_speed(self, right_speed, left_speed):
 
@@ -84,61 +90,51 @@ class MyRobot(Robot):
     def avoid_collision(self):
         sum_distance_left = 0
         sum_distance_right = 0
+        for i, sensor in enumerate(self.all_distance_sensor_left):
+            sum_distance_left += (i * 10.0) * sensor.getValue()/self.distance_sensor_left.getMaxValue()  # i * sensor.getValue() / 100.0
 
-        for sensor in self.all_distance_sensor_left:
-            sum_distance_left += sensor.getValue()
+        for i, sensor in enumerate(self.all_distance_sensor_right):
+            sum_distance_right += (i * 10.0) * sensor.getValue()/self.distance_sensor_right.getMaxValue()  # (len(self.all_distance_sensor_right) - i) * sensor.getValue()/100.0
 
-        for sensor in self.all_distance_sensor_right:
-            sum_distance_right += sensor.getValue()
+        self.set_speed(self.__MAX_SPEED - sum_distance_left, self.__MAX_SPEED - sum_distance_right)
 
-        self.set_speed(self.__MAX_SPEED - map_range(sum_distance_left, 0, self.distance_sensor_left.getMaxValue(),
-                                                    -self.__MAX_SPEED, self.__MAX_SPEED),
-                       self.__MAX_SPEED - map_range(sum_distance_right, 0, self.distance_sensor_right.getMaxValue(),
-                                                    -self.__MAX_SPEED, self.__MAX_SPEED))
+        # self.set_speed(self.__MAX_SPEED - map_range(sum_distance_left, 0, self.distance_sensor_left.getMaxValue(),
+        #                                             -self.__MAX_SPEED, self.__MAX_SPEED),
+        #                self.__MAX_SPEED - map_range(sum_distance_right, 0, self.distance_sensor_right.getMaxValue(),
+        #                                             -self.__MAX_SPEED, self.__MAX_SPEED))
+
         # print('dist : ', self.distance_sensor_right.getValue(), self.distance_sensor_left.getValue())
         # print('speed : ', self.right_wheel.getVelocity(), self.left_wheel.getVelocity())
 
-    def compute_speed_vector(self):
-        pass
+    def calculate_opposite_angle(self, target_direction):
+        robot_direction = self.compass.getValues()
+        angle = math.atan2(-target_direction[1], -target_direction[0]) - math.atan2(robot_direction[1],
+                                                                                    robot_direction[0])
+        return angle
+
+    def follow_direction(self, target_direction, angle_tolerance=0.1):
+        opposite_direction = [-target_direction[0], -target_direction[1]]
+
+        opposite_angle = self.calculate_opposite_angle(target_direction)
+
+        if abs(opposite_angle) < angle_tolerance:
+            self.left_wheel.setVelocity(self.__MAX_SPEED)
+            self.right_wheel.setVelocity(self.__MAX_SPEED)
+        else:
+            if opposite_angle > 0:
+                self.left_wheel.setVelocity(self.__MAX_SPEED)
+                self.right_wheel.setVelocity(-self.__MAX_SPEED)
+            else:
+                self.left_wheel.setVelocity(-self.__MAX_SPEED)
+                self.right_wheel.setVelocity(self.__MAX_SPEED)
+
     def run(self):
+        target_direction = [-0.6848047797078073, 0.7285135176177693]
         while self.step(self.timestep) != -1:
-            # Get current position from GPS
-            current_position = self.gps.getValues()
-
+            # if (self.all_distance_sensor_left[2].getValue() > 800 or self.all_distance_sensor_right[2].getValue() > 800):
             self.avoid_collision()
-            # Compute difference between current position and target position
-            dx = TARGET_X - current_position[0]
-            dy = TARGET_Y - current_position[1]
-            dz = TARGET_Z - current_position[2]
-
-            # Calculate the angle to the target
-            # angle_to_target = -atan2(dy, dx)
-            angle_to_target = angle_between_vectors([dx, dy], [current_position[0] - (current_position[0] + 3),
-                                                               current_position[1]])
-
-            # Get current angular velocity from the gyroscope
-            gyro_rate_y = self.gyro.getValues()[1]  # Assuming gyro returns values for Y-axis
-
-            # Integrate gyro rate to get the orientation angle (in radians)
-            current_orientation = angle_to_target + gyro_rate_y * self.timestep / 1000.0  # Convert timestep to seconds
-
-            # Calculate the difference between the current orientation and the angle to the target
-            delta_angle = angle_to_target - current_orientation
-
-            # print(current_orientation, angle_to_target)
-
-
-            # # Adjust motor velocities based on the difference
-            # if abs(dx) > 0.1 or abs(dy) > 0.1 or abs(dz) > 0.1:  # Threshold for stopping
-            #
-            #     self.set_speed(self.right_wheel.getVelocity() - delta_angle,
-            #                    self.left_wheel.getVelocity() + delta_angle)
-            #
-            # else:
-            #     # Stop the robot when it reaches the target with a 3 degree error margin
-            #     if abs(delta_angle) < 3 * (math.pi / 180):  # 3 degrees in radians
-            #         self.left_wheel.setVelocity(0)
-            #         self.right_wheel.setVelocity(0)
+            #  else:
+            self.follow_direction(target_direction)
 
 
 # Create the Robot instance.
