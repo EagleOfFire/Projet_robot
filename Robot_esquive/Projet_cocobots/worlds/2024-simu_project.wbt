@@ -1,0 +1,291 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "../protos/RoadLine.proto"
+EXTERNPROTO "../protos/SolidPipe1.proto"
+EXTERNPROTO "../protos/SolidPipe2.proto"
+EXTERNPROTO "../protos/SolidPipe3.proto"
+EXTERNPROTO "../protos/SolidPipe4.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Asphalt.proto"
+EXTERNPROTO "../protos/Road.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/obstacles/protos/Ramp30deg.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/traffic/protos/PedestrianCrossing.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/toys/protos/RubberDuck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/traffic/protos/TrafficCone.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/traffic/protos/HighwayPole.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/traffic/protos/HighwaySign.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/road/protos/RoadPillars.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/adept/pioneer3/protos/Pioneer3dx.proto"
+
+WorldInfo {
+  basicTimeStep 20
+  defaultDamping Damping {
+  }
+}
+Viewpoint {
+  orientation -0.5128831582455065 0.25684449899727874 0.819134768718159 2.355053400944258
+  position -2.8900482935740364 14.240325945288014 56.03652450257737
+}
+TexturedBackgroundLight {
+}
+TexturedBackground {
+  texture "noon_park_empty"
+  skyColor [
+    0 0 1
+  ]
+}
+RectangleArena {
+  translation 1.62531 0.849485 5.68434e-14
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 0.5
+}
+Ramp30deg {
+  translation -14.1511 19.1333 3.55271e-15
+  rotation 0 0 1 1.8326
+}
+RectangleArena {
+  translation -29.7867 36.7686 1.03739e-12
+  name "rectangle arena(1)"
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 0.5
+}
+PedestrianCrossing {
+  translation -15.9785 22.5101 -0.19
+  rotation 0 0 1 1.5708
+  size 8 8
+  enableBoundingObject FALSE
+}
+PedestrianCrossing {
+  translation -43.7573 51.0985 -0.19
+  rotation 0 0 1 1.5708
+  name "pedestrian crossing(1)"
+  size 8 8
+  enableBoundingObject FALSE
+}
+RectangleArena {
+  translation -61.53 72.2683 0
+  name "rectangle arena(2)"
+  floorSize 35 35
+  floorTileSize 20 20
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.5
+  wallHeight 0.5
+}
+HighwayPole {
+  translation -46.6667 88.7436 -0.14
+  rotation 0 0 1 -1.5707953071795862
+  rightHorizontalSigns [
+    HighwaySign {
+      translation 0.09 0 0
+      name "vertical sign"
+    }
+  ]
+}
+SolidPipe1 {
+  translation -74.1397 75.406 2
+  rotation 1 0 0 -1.5707953071795862
+  name "pipe4"
+  height 12
+  appearance PBRAppearance {
+    baseColor 1 1 0
+    transparency 0.5
+    roughness 0.5
+    metalness 0
+  }
+}
+SolidPipe2 {
+  translation -60.6807 69.4101 7
+  rotation 1 0 0 -1.5707953071795862
+  name "pipe2"
+  height 5
+  appearance PBRAppearance {
+    baseColor 0 1 1
+    transparency 0.5
+    roughness 0.5
+    metalness 0
+  }
+}
+SolidPipe3 {
+  translation -53.934 76.2414 4
+  rotation -0.8768880072093348 -0.33990200279450433 0.3399030027945126 1.7018
+  name "pipe1"
+  height 8
+  appearance PBRAppearance {
+    baseColor 1 0 1
+    transparency 0.5
+    roughness 0.5
+    metalness 0
+  }
+}
+SolidPipe4 {
+  translation -68.7366 59.6817 10
+  rotation -0.5697930319719425 0.5810920326059464 -0.5810920326059464 2.10577
+  name "pipe3"
+  height 5
+  appearance PBRAppearance {
+    baseColor 0 1 0
+    transparency 0.5
+    roughness 0.5
+    metalness 0
+  }
+}
+SolidBox {
+  translation -14.8371 31.6911 2
+  size 5 10 5
+}
+SolidBox {
+  translation -34.8845 49.2527 2
+  name "rounded box(8)"
+  size 5 10 5
+}
+SolidBox {
+  translation -42.0283 31.498 2
+  rotation 0 0 1 1.56425
+  name "rounded box(7)"
+  size 5 10 5
+}
+SolidBox {
+  translation -21.8989 46.2055 1
+  rotation 0 0 -1 0.935933
+  name "rounded box(6)"
+  size 2 8 2
+}
+SolidBox {
+  translation -31.6855 27.8511 1
+  rotation 0 0 -1 0.00654517
+  name "rounded box(9)"
+  size 2 10 2
+}
+Pioneer3dx {
+  translation -16 23 0.1
+  rotation 0 0 1 2.35
+  controller "cocobots_second_map_controller"
+  extensionSlot [
+    Compass {
+    }
+    GPS {
+    }
+  ]
+}
+SolidBox {
+  translation -25.3049 38.1055 1
+  rotation 0 0 -1 0.00654517
+  name "rounded box(10)"
+  size 2 10 2
+}
+SolidBox {
+  translation -36.8578 34.4436 1
+  name "rounded box(2)"
+}
+SolidBox {
+  translation -32.239 38.6817 1
+  name "rounded box(3)"
+}
+SolidBox {
+  translation -30.3282 38.7538 1
+  name "rounded box(13)"
+}
+SolidBox {
+  translation -26.9499 34.0866 1
+  name "rounded box(4)"
+}
+SolidBox {
+  translation -23.1975 23.782 1
+  name "rounded box(12)"
+}
+SolidBox {
+  translation -29.7066 31.9385 1
+  name "rounded box(11)"
+}
+SolidBox {
+  translation -33.7563 38.7037 1
+  name "rounded box(5)"
+}
+SolidBox {
+  translation -20.0214 34.6029 1
+  name "rounded box(1)"
+}
+Road {
+  translation -16 -15.5 0.01
+  name "mainroad"
+  width 2
+  lines [
+    RoadLine {
+      color 0 1 0
+      type "continuous"
+    }
+  ]
+  roadBorderHeight 0.5
+  roadBorderWidth [
+    0.6
+  ]
+  rightBarrier TRUE
+  leftBarrier TRUE
+  bottom TRUE
+  wayPoints [
+    0 0 0
+    10 0 0
+    10 15 0
+    10 20 0
+    17 20 0
+    17 0 0
+    23 0 0
+    28 0 0
+    35 30 0
+    10 30 0
+    2 30 0
+    2 35.5 0
+  ]
+  appearance Asphalt {
+    colorOverride 0 1 0
+  }
+  rightBorderBoundingObject TRUE
+  leftBorderBoundingObject TRUE
+}
+RubberDuck {
+  translation -43.70501031380124 31.57767408153393 4.7149112861225815
+  rotation -0.00034209098502089056 -0.0008076486825318635 -0.9999996153386078 0.8013077422330873
+  scale 14
+}
+RubberDuck {
+  translation 6.761859329262847 -9.708538874371106 0.4427109443982413
+  rotation -0.00019377831780685288 -2.2955735998925836e-05 0.9999999809614987 -2.905693830336172
+  name "rubber duck(1)"
+  scale 30
+}
+TrafficCone {
+  translation -35.0519 49.191 4.41
+  scale 4
+}
+TrafficCone {
+  translation -12.2273 6.83311 -2.84217e-13
+  scale 10
+  name "traffic cone(1)"
+}
+RubberDuck {
+  translation -15.022657620874035 33.05043532055372 4.730577701626556
+  rotation -0.0006505951904356437 0.0016110438807157132 0.9999984906306171 0.7693910207270857
+  name "rubber duck(2)"
+  scale 18
+}
+RoadPillars {
+  translation -73.9608 75.7566 -1.5
+  rotation 0 0 1 -1.5707953071795862
+  height 6
+}
