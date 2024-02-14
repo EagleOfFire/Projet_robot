@@ -1,22 +1,17 @@
 #VRML_SIM R2023b utf8
 
-EXTERNPROTO "../protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
-EXTERNPROTO "../protos/Road.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/road/protos/RoadLine.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidRoundedBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidPipe.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/adept/pioneer3/protos/Pioneer3dx.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.1865324782408456 -0.23070168357623763 -0.9549776791927747 4.878063246539462
-  position -51.86906271364613 -111.3991010655149 56.02193046035591
-}
-TexturedBackground {
-  texture "twilight_cloudy_empty"
+  orientation -0.308222810572637 -0.8891532734756464 0.33823831141703437 5.432570292258339
+  position -78.91222412880299 64.84309284414896 47.97362398829014
 }
 TexturedBackgroundLight {
 }
@@ -40,6 +35,25 @@ RectangleArena {
   }
   wallThickness 0.5
   wallHeight 0
+}
+Pioneer3dx {
+  hidden position_0_0 -3.3634732771105904
+  hidden position_0_1 25.643788871528194
+  hidden position_0_2 25.64497017859111
+  hidden rotation_1 -0.6624819157441347 -0.5296780327010698 -0.5296781031776807 4.311792404547764
+  hidden position_1_0 -26.30734225394087
+  hidden rotation_2 -1 0 0 1.1746010252225245
+  hidden rotation_4 0.4510827203708881 -0.4510827015118271 -0.770096601589431 1.8291138424247047
+  hidden rotation_9 0.4507202388758636 -0.45072021997028705 -0.7705209598561358 1.8285811893101525
+  translation -43.576 42.5194 0.0143192
+  rotation -0.030900315009901962 0.04797442330369093 0.9983704849608522 0.666676
+  controller "cocobots_second_map_controller"
+  extensionSlot [
+    Gyro {
+    }
+    GPS {
+    }
+  ]
 }
 RectangleArena {
   translation -60.5709 69.2032 -1.85
@@ -139,29 +153,4 @@ SolidRoundedBox {
 SolidRoundedBox {
   translation -20.0214 34.6029 1
   name "rounded box(1)"
-}
-Road {
-  translation -16 -15.5 0.25
-  width 2
-  lines [
-    RoadLine {
-      color 0 1 0
-      type "continuous"
-    }
-  ]
-  roadBorderHeight 0.4
-  wayPoints [
-    0 0 0
-    10 0 0
-    10 15 0
-    10 20 0
-    17 20 0
-    17 0 0
-    23 0 0
-    28 0 0
-    35 30 0
-    10 30 0
-    0 30 1
-    0 36 2
-  ]
 }
